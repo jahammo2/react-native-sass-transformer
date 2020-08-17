@@ -82,8 +82,10 @@ function renderToCSS({ src, filename, options }) {
     }
   };
 
-  const globalImport = `${appRoot}/app/javascript/packs/src/styles/globallyAvailable.scss`;
-  let data = `@import '${globalImport}';\n${src}`;
+  let data = src;
+  const globalImport = process.env.SASS_RESOURCES_PATH;
+
+  if (globalImport) data = `@import '${globalImport}';\n${src}`;
 
   var opts = options.sassOptions
     ? Object.assign(defaultOpts, options.sassOptions, { data })
