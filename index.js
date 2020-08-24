@@ -84,8 +84,10 @@ function renderToCSS({ src, filename, options }) {
 
   let data = src;
   const globalImport = process.env.SASS_RESOURCES_PATH;
+  const srcPath = process.env.SRC_PATH;
 
   if (globalImport) data = `@import '${globalImport}';\n${src}`;
+  if (srcPath) data = data.replace('@import "~src/', `@import "${srcPath}/`);
 
   var opts = options.sassOptions
     ? Object.assign(defaultOpts, options.sassOptions, { data })
